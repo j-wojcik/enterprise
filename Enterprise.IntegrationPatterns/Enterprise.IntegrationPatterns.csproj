@@ -33,13 +33,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AckEventArgs.cs" />
+    <Compile Include="EventArgs\AckEventArgs.cs" />
     <Compile Include="Converters\JsonMessageConverter.cs" />
-    <Compile Include="IMessageConverter.cs" />
-    <Compile Include="IReceiver.cs" />
-    <Compile Include="ISender.cs" />
-    <Compile Include="IWorker.cs" />
-    <Compile Include="NackEventArgs.cs" />
+    <Compile Include="Interfaces\IMessageConverter.cs" />
+    <Compile Include="Interfaces\IReceiver.cs" />
+    <Compile Include="Interfaces\ISender.cs" />
+    <Compile Include="Interfaces\IWorker.cs" />
+    <Compile Include="EventArgs\NackEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -53,5 +53,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

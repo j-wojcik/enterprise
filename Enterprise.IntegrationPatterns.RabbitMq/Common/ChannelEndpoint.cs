@@ -10,7 +10,7 @@ namespace Enterprise.IntegrationPatterns.RabbitMq.Common
     public abstract class ChannelEndpoint<TMessage> : IDisposable
     { 
         private readonly IChannelFactory _channelFactory;
-        protected readonly IModel _channel;
+        protected readonly Channel _channel;
         protected readonly IMessageConverter _messageConverter;
         protected readonly string _endpoint;
 
@@ -24,7 +24,7 @@ namespace Enterprise.IntegrationPatterns.RabbitMq.Common
 
         public virtual void Dispose()
         {
-            _channel.Dispose();
+            _channel.Model.Dispose();
         }
     }
 }

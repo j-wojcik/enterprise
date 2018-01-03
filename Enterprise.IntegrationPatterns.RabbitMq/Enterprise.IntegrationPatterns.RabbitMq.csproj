@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Channel.cs" />
     <Compile Include="Common\ChannelEndpoint.cs" />
     <Compile Include="Common\ChannelFactory.cs" />
     <Compile Include="Common\IChannelFactory.cs" />

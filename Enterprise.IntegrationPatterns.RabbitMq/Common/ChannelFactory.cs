@@ -58,24 +58,25 @@ namespace Enterprise.IntegrationPatterns.RabbitMq
             }
         }
 
-        public IModel OpenChannel(string broker, string endpoint)
+        public Channel OpenChannel(string broker, string endpoint)
         {      
-            var channel = GetConnection(broker).CreateModel();
-
+            var model = GetConnection(broker).CreateModel();
+            //TODO: DRY, refactor durring next iteration
             if (_configuration.Queues[endpoint] != null)
             {
                 var config = _configuration.Queues[endpoint];
-                channel.QueueDeclare(config.Name, config.Durable, config.Exclusive, config.AutoDelete, null);
+                model.QueueDeclare(config.Name, config.Durable, config.Exclusive, config.AutoDelete, null);
+                return new Channel() { Model = model, IsExchange = false, EndpointName = config.Name };
             }
-            else if (_configuration.Exchanges[endpoint] != null)
+
+            if (_configuration.Exchanges[endpoint] != null)
             {
                 var config = _configuration.Exchanges[endpoint];
-                channel.ExchangeDeclare(config.Name, config.ExchangeType.ToString());
+                model.ExchangeDeclare(config.Name, config.ExchangeType.ToString());
+                return new Channel() { Model = model, IsExchange = true, EndpointName = config.Name };
             }
-            else
-                throw new ArgumentException(nameof(broker));
 
-            return channel;
+            throw new ArgumentException(nameof(broker));
         }
 
         private Broker GetBrokerConfiguration(EnterpriseIntegration configuration, string broker)

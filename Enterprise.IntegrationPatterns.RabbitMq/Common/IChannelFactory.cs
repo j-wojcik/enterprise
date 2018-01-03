@@ -9,6 +9,6 @@ namespace Enterprise.IntegrationPatterns.RabbitMq.Common
 {
     public interface IChannelFactory : IDisposable
     {
-        IModel OpenChannel(string broker, string endpoint);
+        Channel OpenChannel(string broker, string endpoint);
     }
 }

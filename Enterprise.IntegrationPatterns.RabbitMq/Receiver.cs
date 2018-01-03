@@ -15,23 +15,23 @@ namespace Enterprise.IntegrationPatterns.RabbitMq
             _worker = worker ?? throw new ArgumentException(nameof(worker));
             worker.JobDone += Worker_JobDone;
             worker.JobFailed += Worker_JobFailed;
-            _consumer = new EventingBasicConsumer(_channel);
+            _consumer = new EventingBasicConsumer(_channel.Model);
         }
 
         private void Worker_JobFailed(object sender, NackEventArgs e)
         {
-            _channel.BasicNack(e.DeliveryTag, e.MultipleAck, e.Requeue);
+            _channel.Model.BasicNack(e.DeliveryTag, e.MultipleAck, e.Requeue);
         }
 
         private void Worker_JobDone(object sender, AckEventArgs e)
         {
-            _channel.BasicAck(e.DeliveryTag, e.MultipleAck);
+            _channel.Model.BasicAck(e.DeliveryTag, e.MultipleAck);
         }
 
         public void StartListening()
-        {         
+        {  
             _consumer.Received += Consumer_Received;
-            _channel.BasicConsume(queue: _endpoint,
+            _channel.Model.BasicConsume(queue: _channel.EndpointName,
                                  autoAck: true,
                                  consumer: _consumer);
         }

@@ -12,8 +12,8 @@ namespace Enterprise.IntegrationPatterns.RabbitMq
         public void Send(TMessage message)
         {
             var body = _messageConverter.Serialize(message);
-            _channel.BasicPublish(exchange: "",
-                                 routingKey: "",
+            _channel.Model.BasicPublish(exchange: _channel.IsExchange ? _channel.EndpointName : "",
+                                 routingKey: _channel.IsExchange ? "":_channel.EndpointName,
                                  basicProperties: null,
                                  body: body);
         }
