@@ -72,11 +72,11 @@ namespace Enterprise.IntegrationPatterns.RabbitMq
             if (_configuration.Exchanges[endpoint] != null)
             {
                 var config = _configuration.Exchanges[endpoint];
-                model.ExchangeDeclare(config.Name, config.ExchangeType.ToString());
+                model.ExchangeDeclare(config.Name, config.ExchangeType.ToString(), config.Durable, false, null);
                 return new Channel() { Model = model, IsExchange = true, EndpointName = config.Name };
             }
 
-            throw new ArgumentException(nameof(broker));
+            throw new ArgumentException(nameof(endpoint));
         }
 
         private Broker GetBrokerConfiguration(EnterpriseIntegration configuration, string broker)

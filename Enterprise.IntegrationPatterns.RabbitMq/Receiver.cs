@@ -1,4 +1,5 @@
-﻿using Enterprise.IntegrationPatterns.RabbitMq.Common;
+﻿using Enterprise.IntegrationPatterns.Messages;
+using Enterprise.IntegrationPatterns.RabbitMq.Common;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
@@ -39,7 +40,7 @@ namespace Enterprise.IntegrationPatterns.RabbitMq
         private void Consumer_Received(object sender, BasicDeliverEventArgs e)
         {
             var message = _messageConverter.Deserialize<TMessage>(e.Body);
-            _worker.DoJob(message);
+            _worker.DoJob(new Message<TMessage>() { Body = message, DeliveryTag = e.DeliveryTag });
         }
 
         public override void Dispose()

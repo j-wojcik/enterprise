@@ -52,5 +52,19 @@ namespace Enterprise.IntegrationPatterns.RabbitMq.Configuration
                 this["routingKey"] = value;
             }
         }
+
+        [ConfigurationProperty("durable", DefaultValue = "false", IsRequired = false)]
+        public bool Durable
+        {
+            get
+            {
+                return (bool)this["durable"];
+            }
+
+            set
+            {
+                this["durable"] = value;
+            }
+        }
     }
 }

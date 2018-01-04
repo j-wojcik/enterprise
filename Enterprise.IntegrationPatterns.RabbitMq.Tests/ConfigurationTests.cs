@@ -63,6 +63,7 @@ namespace Enterprise.IntegrationPatterns.RabbitMq.Tests
             Assert.AreEqual("test", testExchange.Name);
             Assert.AreEqual(ExchangeType.fanout , testExchange.ExchangeType);
             Assert.AreEqual(string.Empty, testExchange.RoutingKey);
+            Assert.AreEqual(false, testExchange.Durable);
         }
 
         [Test]
