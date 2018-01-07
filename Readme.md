@@ -108,15 +108,40 @@ To add enterprise integration config section you must register it in \<configSec
 ``` 
 After registration you are able to add your wn brokers, queues and exchanges inside \<EnterpriseIntegration>
 ### Broker
-
+You may unfderstand broker as instance of your AMQP hosting.
 ```xml
 <broker key="configTestBroker" address="localhost" virtualHost="test" username="testUser" password="testPass"/>
 ```
+|PropertyName|Type|Description|
+|---|---|---|
+|key|string|Uinique key to find your defeinition in configuration collection. This thing you should use in your code to connect.|
+|address|string|Your broker address|
+|virtualHost|string|Virtual host on your broker that contains our endpoints| 
+|username|string|User name|
+|password|string|Password|
+
 ### Queue
+Queue is basic type of channel you may publish to or read messages from. 
 ```xml
 <queue key="configTestQueue" name="test" durable="true" exclusive="true" autoDelete="true"/>
 ```
+
+|PropertyName|Type|Description|
+|---|---|---|
+|key|string|Uinique key to find your defeinition in configuration collection. This thing you should use in your code to connect.|
+|name|string|Name of queue on broker|
+|durable|bool|To set if yur queue is durable| 
+|exclusive|bool|To set if yur queue is durable|
+|autoDelete|bool|To set if yur queue is autoDelete|
 ### Exchange
+Exhange i more complex type used to publish to it. You may read mode here: https://www.rabbitmq.com/tutorials/amqp-concepts.html
 ```xml
 <exchange key="publishTestExchange" durable="true" name="publishTest" type="fanout"/>
 ```
+
+|PropertyName|Type|Description|
+|---|---|---|
+|key|string|Uinique key to find your defeinition in configuration collection. This thing you should use in your code to connect.|
+|name|string|Name of exchange on broker|
+|durable|bool|To set if yur queue is durable| 
+|type|{direct, fanout, topic, header}|Type of you exchange|
