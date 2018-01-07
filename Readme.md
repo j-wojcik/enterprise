@@ -1,10 +1,11 @@
 # Itegration patterns
+Library contains set of classes, that allows to easy integrate your aplications via message queues. It implements many of entities you know from articles/books, about integration (eg. channel, sender, receiver, exhchange etc.)
 
 ## Code samples
 
 
 ### Send via channel
-To send message via channel you must just pick destination address (broker/andpoint) and use method Send in generic sender.
+To send message via channel you must just pick destination address (broker/endpoint) and use method Send in generic sender.
 
 ```c#
 using (var sender = new Sender<MyClass>(_factory, _converter, "myBroker", "publishEndpoint"))
@@ -14,7 +15,7 @@ using (var sender = new Sender<MyClass>(_factory, _converter, "myBroker", "publi
 ```
 
 ### Receive from channel
-Messages are received by generic receivers that accepts instance of your worker (class that Handle message). Your worker class must implement IWorker interface.
+Messages are received by generic receivers that accepts instance of your worker (class that will Handle message). Your worker class must implement IWorker interface.
 ```c#
 using (var receiver = new Receiver<MyClass>(worker, _factory, _converter, "integrationBroker", "integrationTestQueue"))
 {
@@ -22,7 +23,7 @@ using (var receiver = new Receiver<MyClass>(worker, _factory, _converter, "integ
 }	
 ```
 
-
+IWorker interface 
 ```c#
 class Worker : IWorker<MyClass>
 {
@@ -36,7 +37,7 @@ class Worker : IWorker<MyClass>
 }
 ```
 ### Publish/Subscribe
-
+To publish just pick configured exchange as your endpont. 
 ```c#
 using (var sender = new Sender<MyClass>(_factory, _converter, "integrationBroker", "publishTestExchange"))
 {
@@ -44,7 +45,31 @@ using (var sender = new Sender<MyClass>(_factory, _converter, "integrationBroker
 }
 ```
 
+There is no difference in subscribing and receiving for channel (because you are doing the same thing).
+```c#
+using (var receiver = new Receiver<MyClass>(worker, _factory, _converter, "integrationBroker", "subscribeQueue"))
+{
+                receiver.StartListening();
+}	
+```
+
 ### Work balancer
+To balance your work just send you mesage to balancing queue (exclusive=false). 
+
+```c#
+using (var sender = new Sender<MyClass>(_factory, _converter, "integrationBroker", "balacerQueue"))
+{
+    sender.Send(myClassInstance);
+}
+```
+
+Connect all workers as clients.
+```c#
+using (var receiver = new Receiver<MyClass>(worker, _factory, _converter, "integrationBroker", "balacerQueue"))
+{
+                receiver.StartListening();
+}	
+```
 
 ## Configuation
 
@@ -75,6 +100,13 @@ using (var sender = new Sender<MyClass>(_factory, _converter, "integrationBroker
   </EnterpriseIntegration>
 </configuration>
 ```
+To add enterprise integration config section you must register it in \<configSections>
+```xml
+<configSections>
+    <section name="EnterpriseIntegration" type="Enterprise.IntegrationPatterns.RabbitMq.Configuration.EnterpriseIntegration, Enterprise.IntegrationPatterns.RabbitMq" />
+  </configSections>
+``` 
+After registration you are able to add your wn brokers, queues and exchanges inside \<EnterpriseIntegration>
 ### Broker
 
 ```xml
