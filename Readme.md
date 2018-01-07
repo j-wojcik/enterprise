@@ -1,5 +1,5 @@
 # Itegration patterns
-Library contains set of classes, that allows to easy integrate your aplications via message queues. It implements many of entities you know from articles/books, about integration (eg. channel, sender, receiver, exhchange etc.)
+Library contains set of classes, that allows to easy integrate your aplications via message queues. It implements many of entities you know from articles/books, about integration (eg. channel, sender, receiver, exchange etc.)
 
 ## Code samples
 
