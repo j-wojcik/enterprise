@@ -71,6 +71,24 @@ using (var receiver = new Receiver<MyClass>(worker, _factory, _converter, "integ
 }	
 ```
 
+### RPC Server
+To start server that publish your method via queue just create object with endpoint and pass delegate to your method.
+```c#
+using (var server = new RPCServer<ArgumentType, ReturnType>(_factory, _converter, "integrationBroker", "rpcTestQueue"))
+{
+                server.Start(YourMethod);
+}
+```
+
+### RPC Client
+To be able to call RPC servers just create  client bject and use Call method.
+```c#
+using (var client = new RPCClient<ArgumentType, ReturnType>(_factory, _converter, "integrationBroker", "rpcTestQueue"))
+{
+                server.Call(argumentInstance);
+}
+```
+
 ## Configuation
 
 ### Config section
