@@ -67,6 +67,8 @@
     <Compile Include="Configuration\SendProperties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Receiver.cs" />
+    <Compile Include="RPCClient.cs" />
+    <Compile Include="RPCServer.cs" />
     <Compile Include="Sender.cs" />
   </ItemGroup>
   <ItemGroup>
