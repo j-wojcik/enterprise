@@ -1,5 +1,5 @@
-# Itegration patterns
-Library contains set of classes, that allows to easy integrate your aplications via message queues. It implements many of entities you know from articles/books, about integration (eg. channel, sender, receiver, exchange etc.)
+# Integration patterns
+Library contains set of classes, that allows to easy integrate your applications via message queues. It implements many of entities you know from articles/books, about integration (eg. channel, sender, receiver, exchange etc.)
 
 ## Code samples
 
@@ -37,7 +37,7 @@ class Worker : IWorker<MyClass>
 }
 ```
 ### Publish/Subscribe
-To publish just pick configured exchange as your endpont. 
+To publish just pick configured exchange as your endpoint. 
 ```c#
 using (var sender = new Sender<MyClass>(_factory, _converter, "integrationBroker", "publishTestExchange"))
 {
@@ -54,7 +54,7 @@ using (var receiver = new Receiver<MyClass>(worker, _factory, _converter, "integ
 ```
 
 ### Work balancer
-To balance your work just send you mesage to balancing queue (exclusive=false). 
+To balance your work just send you message to balancing queue (exclusive=false). 
 
 ```c#
 using (var sender = new Sender<MyClass>(_factory, _converter, "integrationBroker", "balacerQueue"))
@@ -81,7 +81,7 @@ using (var server = new RPCServer<ArgumentType, ReturnType>(_factory, _converter
 ```
 
 ### RPC Client
-To be able to call RPC servers just create  client bject and use Call method.
+To be able to call RPC servers just create  client object and use Call method.
 ```c#
 using (var client = new RPCClient<ArgumentType, ReturnType>(_factory, _converter, "integrationBroker", "rpcTestQueue"))
 {
@@ -89,7 +89,7 @@ using (var client = new RPCClient<ArgumentType, ReturnType>(_factory, _converter
 }
 ```
 
-## Configuation
+## Configuration
 
 ### Config section
 
@@ -124,15 +124,15 @@ To add enterprise integration config section you must register it in \<configSec
     <section name="EnterpriseIntegration" type="Enterprise.IntegrationPatterns.RabbitMq.Configuration.EnterpriseIntegration, Enterprise.IntegrationPatterns.RabbitMq" />
   </configSections>
 ``` 
-After registration you are able to add your wn brokers, queues and exchanges inside \<EnterpriseIntegration>
+After registration you are able to add your own brokers, queues and exchanges inside \<EnterpriseIntegration>
 ### Broker
-You may unfderstand broker as instance of your AMQP hosting.
+You may understand broker as instance of your AMQP hosting.
 ```xml
 <broker key="configTestBroker" address="localhost" virtualHost="test" username="testUser" password="testPass"/>
 ```
 |PropertyName|Type|Description|
 |---|---|---|
-|key|string|Uinique key to find your defeinition in configuration collection. This thing you should use in your code to connect.|
+|key|string|Unique key to find your definition in configuration collection. This thing you should use in your code to connect.|
 |address|string|Your broker address|
 |virtualHost|string|Virtual host on your broker that contains our endpoints| 
 |username|string|User name|
@@ -146,11 +146,11 @@ Queue is basic type of channel you may publish to or read messages from.
 
 |PropertyName|Type|Description|
 |---|---|---|
-|key|string|Uinique key to find your defeinition in configuration collection. This thing you should use in your code to connect.|
+|key|string|Unique key to find your definition in configuration collection. This thing you should use in your code to connect.|
 |name|string|Name of queue on broker|
-|durable|bool|To set if yur queue is durable| 
-|exclusive|bool|To set if yur queue is durable|
-|autoDelete|bool|To set if yur queue is autoDelete|
+|durable|bool|To set if your queue is durable| 
+|exclusive|bool|To set if your queue is durable|
+|autoDelete|bool|To set if your queue is autoDelete|
 ### Exchange
 Exhange i more complex type used to publish to it. You may read mode here: https://www.rabbitmq.com/tutorials/amqp-concepts.html
 ```xml
@@ -159,7 +159,7 @@ Exhange i more complex type used to publish to it. You may read mode here: https
 
 |PropertyName|Type|Description|
 |---|---|---|
-|key|string|Uinique key to find your defeinition in configuration collection. This thing you should use in your code to connect.|
+|key|string|Unique key to find your definition in configuration collection. This thing you should use in your code to connect.|
 |name|string|Name of exchange on broker|
-|durable|bool|To set if yur queue is durable| 
-|type|{direct, fanout, topic, header}|Type of you exchange|
+|durable|bool|To set if your queue is durable| 
+|type|{direct, fanout, topic, header}|Type of your exchange|
